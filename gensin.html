@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Value Display</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #5A67D8;
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-box {
+            flex: 1 1 calc(50% - 20px);
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-box label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4A5568;
+        }
+
+        .input-box input {
+            padding: 10px;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-size: 16px;
+        }
+
+        .input-box input:focus {
+            border-color: #5A67D8;
+        }
+
+        .results {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .results h2 {
+            margin-bottom: 15px;
+            color: #2D3748;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5A67D8;
+            color: #fff;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        tr:hover {
+            background-color: #edf2f7;
+        }
+
+        @media (max-width: 600px) {
+            .input-box {
+                flex: 1 1 100%;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>入力値表示</h1>
+    <div class="input-container">
+        <div class="input-box">
+            <label for="attack">攻撃力/HP</label>
+            <input type="number" id="attack" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="talent">天賦倍率(%)</label>
+            <input type="number" id="talent" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="damageBuff">ダメバフ(%)</label>
+            <input type="number" id="damageBuff" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="critDamage">会心ダメ(%)</label>
+            <input type="number" id="critDamage" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="critRate">会心率(%)</label>
+            <input type="number" id="critRate" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="elementalMastery">熟知</label>
+            <input type="number" id="elementalMastery" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="specialMultiplication">特殊乗算(+%)</label>
+            <input type="number" id="specialMultiplication" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="reactionBonus">反応ボーナス</label>
+            <input type="number" id="reactionBonus" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="additiveSource">加算元ステ</label>
+            <input type="number" id="additiveSource" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="additiveMultiplier">加算倍率%</label>
+            <input type="number" id="additiveMultiplier" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="aggravate">激化</label>
+            <input type="text" id="aggravate" placeholder="文字を入力" value="">
+        </div>
+        <div class="input-box">
+            <label for="vaporizeMelt">蒸発溶解</label>
+            <input type="number" id="vaporizeMelt" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="resistance">耐性(%)</label>
+            <input type="number" id="resistance" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="defenseDebuff">防御デバフ(%)</label>
+            <input type="number" id="defenseDebuff" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="defenseIgnore">防御無視(%)</label>
+            <input type="number" id="defenseIgnore" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="enemyLevel">敵レベル</label>
+            <input type="number" id="enemyLevel" placeholder="数値を入力" value="0">
+        </div>
+        <div class="input-box">
+            <label for="yourLevel">自レベル</label>
+            <input type="number" id="yourLevel" placeholder="数値を入力" value="0">
+        </div>
+    </div>
+    <div class="results" id="results">
+        <h2>入力された値:</h2>
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>項目</th>
+                    <th>値</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 入力された値がここに表示されます -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.input-box input');
+        const resultsTableBody = document.querySelector('#resultsTable tbody');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', updateResults);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.input-container input[type="number"]');
+            
+            inputs.forEach(input => {
+                const originalValue = input.value;
+                
+                input.addEventListener('focus', function() {
+                    if (this.value === originalValue) {
+                        this.value = '';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.value = originalValue;
+                    }
+                });
+            });
+        });
+
+        function updateResults() {
+            // 既存のテーブル内容をクリア
+            resultsTableBody.innerHTML = '';
+            var val_arr = [];
+
+            inputs.forEach(input => {
+                const label = input.previousElementSibling.textContent;
+                const value = input.value;
+                if (value !== '') {
+                    const row = document.createElement('tr');
+
+                    const cellLabel = document.createElement('td');
+                    cellLabel.textContent = label;
+                    row.appendChild(cellLabel);
+
+                    const cellValue = document.createElement('td');
+                    cellValue.textContent = value;
+                    val_arr.push(Number(value));
+                    row.appendChild(cellValue);
+
+                    resultsTableBody.appendChild(row);
+                }
+            });
+            
+            val_arr[1] = val_arr[1]*0.01;
+            val_arr[2] = (val_arr[2]*0.01)+1;
+            val_arr[3] = (val_arr[3]+100)*0.01;
+            val_arr[7] = val_arr[7]*0.01;
+            if(val_arr[11]===1) {
+                val_arr.push(1);
+            } else {
+                //val_arr[17]
+                console.log(val_arr[11], val_arr[5], val_arr[7]);
+                const B6 = val_arr[11];
+                const F3 = val_arr[5];
+                const H4 = val_arr[7];
+
+                const result = (B6 === 1 ? 1 : (2.78 * F3) / (1400 + F3) + 1 + H4) * B6;
+
+                console.log(`計算結果は: ${result}`);
+
+                val_arr.push(result);
+            }
+            if(val_arr[6]===0) {
+                val_arr.push(1);
+            } else {
+                //val_arr[18]
+                val_arr.push((val_arr[6]+100)/100);
+            }
+            const I3 = [
+                null,  // インデックスを1から開始するために0番目はnull
+                17.17, 18, 19, 20, 22, 23, 24, 26, 32, 34.14, 36, 40, 44, 46, 54, 58, 62, 68, 74,
+                80.58, 84, 92, 96, 102, 106, 112, 118, 122, 128, 136.29, 142, 148, 154, 160, 168, 176, 182, 192, 198,
+                207.3, 214, 222, 234, 242, 256, 266, 280, 294, 308, 323.6, 336, 348, 364, 378, 398, 416, 334, 456, 472,
+                492.88, 514, 538, 564, 592, 522, 652, 678, 706, 736, 76.64, 794, 824, 852, 876, 914, 946, 978, 1012, 1044,
+                1077.44, 1108, 1142, 1276, 1208, 1254, 1288, 1324, 1362, 1404, 1446.85
+            ];
+            const I3_num = val_arr[16];
+            //val_arr[19]
+            val_arr.push(I3[I3_num]);
+            //val_arr[20]
+            val_arr.push((5*val_arr[5])/(1200+val_arr[5])+1+val_arr[7]);
+
+            val_arr[9] = val_arr[9]*0.01;
+            //val_arr[21]
+            val_arr.push(val_arr[8]*val_arr[9])
+            //val_arr[22]
+            if(val_arr[10]==="超激化") {
+                val_arr.push(1.15);
+            } else if(val_arr[10] === "草激化") {
+                val_arr.push(1.25);
+            } else {
+                val_arr.push(0);
+            }
+
+            const C6 = val_arr[12];
+
+            let result;
+            if (C6 < 0) {
+                result = (100 - C6 / 2) / 100;
+            } else if (0 <= C6 && C6 < 75) {
+                result = (100 - C6) / 100;
+            } else if (C6 >= 75) {
+                result = 1 / ((C6 / 25) + 1);
+            } else {
+                result = null;
+            }
+            //val_arr[23]
+            val_arr.push(result);
+            val_arr[14] = val_arr[14]*0.01;
+            val_arr[13] = val_arr[13]*0.01;
+            //val_arr[24]
+            const G6 = val_arr[16];
+            const D7 = val_arr[13];
+            const E7 = val_arr[14];
+            const F6 = val_arr[15];
+
+            // 計算式の実行
+            const result1 = (100 + val_arr[16]) / ((1 - val_arr[13]) * (1 - val_arr[14]) * (val_arr[15] + 100) + 100 + val_arr[16]);
+            val_arr.push(result1)
+            console.log(`計算結果は: ${result1}`);
+
+            console.log(val_arr)
+
+            function uncritical() {
+                const row = document.createElement('tr');
+                const cellLabel = document.createElement('td');
+                cellLabel.textContent = '非会心';
+                row.appendChild(cellLabel);
+
+                const cellValue = document.createElement('td');
+                row.appendChild(cellValue);
+                const A3 = val_arr[0];  // A3の値
+                const B4 = val_arr[1];   // B4の値
+                const G4 = val_arr[18];   // G4の値
+                const J4 = val_arr[21];   // J4の値
+                const K7 = 0;   // K7の値
+                const L7 = 0;   // L7の値
+                const I3 = val_arr[19]; // I3の値
+                const A7 = val_arr[22];   // A7の値
+                const I4 = val_arr[20]; // I4の値
+                const C4 = val_arr[2]; // C4の値
+                const F4 = val_arr[17]; // F4の値
+                const C7 = val_arr[23]; // C7の値
+                const F7 = val_arr[24]; // F7の値
+
+                // 計算式の実行
+                const result = (A3 * B4 * G4 + J4 + K7 + L7 + I3 * A7 * I4) * C4 * F4 * C7 * F7;
+                hikaisin = result
+                cellValue.textContent = result;
+                resultsTableBody.appendChild(row);
+            }
+            function critical() {
+                const row = document.createElement('tr');
+                const cellLabel = document.createElement('td');
+                cellLabel.textContent = '会心';
+                row.appendChild(cellLabel);
+
+                const cellValue = document.createElement('td');
+                row.appendChild(cellValue);
+                const A3 = val_arr[0];  // A3の値
+                const B4 = val_arr[1];   // B4の値
+                const G4 = val_arr[18];   // G4の値
+                const J4 = val_arr[21];   // J4の値
+                const K7 = 0;   // K7の値
+                const L7 = 0;   // L7の値
+                const I3 = val_arr[19]; // I3の値
+                const A7 = val_arr[22];   // A7の値
+                const I4 = val_arr[20]; // I4の値
+                const C4 = val_arr[2]; // C4の値
+                const F4 = val_arr[17]; // F4の値
+                const C7 = val_arr[23]; // C7の値
+                const F7 = val_arr[24]; // F7の値
+                const D4 = val_arr[3]
+
+                const result = (A3 * B4 * G4 + J4 + I3 * A7 * I4) * C4 * D4 * F4 * C7 * F7;
+                kaisin = result
+                cellValue.textContent = result;
+                resultsTableBody.appendChild(row);
+            }
+            function expect() {
+                const row = document.createElement('tr');
+                const cellLabel = document.createElement('td');
+                cellLabel.textContent = '期待値';
+                row.appendChild(cellLabel);
+
+                const cellValue = document.createElement('td');
+                row.appendChild(cellValue);
+                const result = kaisin*(val_arr[4]/100)+hikaisin*((100-val_arr[4])/100)
+                cellValue.textContent = result;
+                resultsTableBody.appendChild(row);
+            }
+            uncritical();
+            critical();
+            expect();
+        }
+    </script>
+</body>
+</html>
